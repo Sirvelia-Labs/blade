@@ -2,9 +2,7 @@
 
 namespace Jenssegers\Blade;
 
-use Illuminate\Container\Container;
-use Illuminate\Contracts\Container\Container as ContainerInterface;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Contracts\View\Factory as FactoryContract;
 use Illuminate\Contracts\View\View;
 use Illuminate\Events\Dispatcher;
@@ -17,7 +15,7 @@ use Illuminate\View\ViewServiceProvider;
 class Blade implements FactoryContract
 {
     /**
-     * @var Application
+     * @var ApplicationContract
      */
     protected $container;
 
@@ -31,9 +29,10 @@ class Blade implements FactoryContract
      */
     private $compiler;
 
-    public function __construct($viewPaths, string $cachePath, ContainerInterface $container = null)
+    public function __construct($viewPaths, string $cachePath)
     {
-        $this->container = $container ?: new Container;
+        $this->container = Application::getInstance();
+        $this->container->alias('view', FactoryContract::class);
 
         $this->setupContainer((array) $viewPaths, $cachePath);
         (new ViewServiceProvider($this->container))->register();
@@ -61,7 +60,7 @@ class Blade implements FactoryContract
     {
         $this->compiler->directive($name, $handler);
     }
-    
+
     public function if($name, callable $callback)
     {
         $this->compiler->if($name, $callback);
@@ -127,7 +126,22 @@ class Blade implements FactoryContract
                 'view.compiled' => $cachePath,
             ];
         }, true);
-        
+
         Facade::setFacadeApplication($this->container);
+    }
+
+    public function compileString(string $string, array $data = []): string
+    {
+        $generated = $this->compiler->compileString($string);
+        ob_start() and extract($data, EXTR_SKIP);
+
+        try {
+            eval('?>' . $generated);
+        } catch (\Exception $e) {
+            ob_get_clean();
+            throw $e;
+        }
+
+        return ob_get_clean();
     }
 }

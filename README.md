@@ -1,24 +1,21 @@
 # Blade
 
-[![Latest Stable Version](http://img.shields.io/github/release/jenssegers/blade.svg)](https://packagist.org/packages/jenssegers/blade) [![Build Status](http://img.shields.io/travis/jenssegers/blade.svg)](https://travis-ci.org/jenssegers/blade) [![Coverage Status](http://img.shields.io/coveralls/jenssegers/blade.svg)](https://coveralls.io/r/jenssegers/blade)
-
-The standalone version of [Laravel's Blade templating engine](https://laravel.com/docs/5.8/blade) for use outside of Laravel.
-
-<p align="center">
-<img src="https://jenssegers.com/static/media/blade2.png" height="200">
-</p>
+The standalone version of [Laravel's Blade templating engine](https://laravel.com/docs/8.x/blade)
+for use outside of Laravel.
 
 ## Installation
 
 Install using composer:
 
 ```bash
-composer require jenssegers/blade
+composer require lexdubyna/blade
 ```
 
 ## Usage
 
-Create a Blade instance by passing it the folder(s) where your view files are located, and a cache folder. Render a template by calling the `make` method. More information about the Blade templating engine can be found on http://laravel.com/docs/5.8/blade.
+Create a Blade instance by passing it the folder(s) where your view files are located, and a cache
+folder. Render a template by calling the `make` method. More information about the Blade templating
+engine can be found on http://laravel.com/docs/5.8/blade.
 
 ```php
 use Jenssegers\Blade\Blade;
@@ -48,8 +45,51 @@ Which allows you to use the following in your blade template:
 Current date: @datetime($date)
 ```
 
-The Blade instances passes all methods to the internal view factory. So methods such as `exists`, `file`, `share`, `composer` and `creator` are available as well. Check out the [original documentation](https://laravel.com/docs/5.8/views) for more information.
+The Blade instances passes all methods to the internal view factory. So methods such as `exists`,
+`file`, `share`, `composer` and `creator` are available as well. Check out the
+[original documentation](https://laravel.com/docs/8.x/views) for more information.
 
-## Integrations
+## Components
 
-- [Phalcon Slayer Framework](https://github.com/phalconslayer/slayer) comes out of the box with Blade.
+You can make use of [view components](https://laravel.com/docs/8.x/blade#components) with this
+package.
+
+To be able to use class-based and anonymous components, you need to register them:
+
+```php
+$blade->compiler()->components([
+    'alert'                     => App\View\Components\Alert::class, // <x-alert type="success" message="OK" />
+    'components.anonymous.link' => 'link'                            // <x-link />
+])
+```
+
+### Class-based Components
+
+Your class component has to extend `Jenssegers\Blade\ViewComponent` and have a protected property
+`$template`:
+
+```php
+namespace App\View\Components;
+
+use Jenssegers\Blade\ViewComponent;
+
+class Alert extends ViewComponent
+{
+    // all the public properties will be exposed inside the template
+    public string $type;
+    public string $message;
+
+    protected string $template = 'components.alert' // $template is required, it's a path to a blade template file
+
+    public function __construct($type, $message)
+    {
+        $this->type = $type;
+        $this->message = $message;
+    }
+}
+```
+
+## TODO:
+
+- tests for components
+- make compatible with `illuminate/view^9.0`
