@@ -15,10 +15,10 @@ composer require lexdubyna/blade
 
 Create a Blade instance by passing it the folder(s) where your view files are located, and a cache
 folder. Render a template by calling the `make` method. More information about the Blade templating
-engine can be found on http://laravel.com/docs/5.8/blade.
+engine can be found on https://laravel.com/docs/8.x/blade.
 
 ```php
-use Jenssegers\Blade\Blade;
+use Lexdubyna\Blade\Blade;
 
 $blade = new Blade('views', 'cache');
 
@@ -71,7 +71,7 @@ Your class component has to extend `Jenssegers\Blade\ViewComponent` and have a p
 ```php
 namespace App\View\Components;
 
-use Jenssegers\Blade\ViewComponent;
+use Lexdubyna\Blade\ViewComponent;
 
 class Alert extends ViewComponent
 {
@@ -79,7 +79,7 @@ class Alert extends ViewComponent
     public string $type;
     public string $message;
 
-    protected string $template = 'components.alert' // $template is required, it's a path to a blade template file
+    protected string $template = 'components.alert'; // $template is required, it's a path to a blade template file
 
     public function __construct($type, $message)
     {

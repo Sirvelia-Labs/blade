@@ -1,6 +1,6 @@
 <?php
 
-namespace Jenssegers\Blade;
+namespace Lexdubyna\Blade;
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\View\Component;

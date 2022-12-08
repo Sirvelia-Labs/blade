@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jenssegers\\Blade\\": "src/"
+            "Lexdubyna\\Blade\\": "src/"
         }
     },
     "minimum-stability": "dev",

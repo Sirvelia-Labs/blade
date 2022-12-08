@@ -1,6 +1,6 @@
 <?php
 
-namespace Jenssegers\Blade;
+namespace Lexdubyna\Blade;
 
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Contracts\View\Factory as FactoryContract;
