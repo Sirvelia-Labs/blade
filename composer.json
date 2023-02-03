@@ -1,13 +1,7 @@
 {
-    "name": "lexdubyna/blade",
+    "name": "SirveliaLabs/blade",
     "description": "The standalone version of Laravel's Blade templating engine for use outside of Laravel.",
-    "keywords": [
-        "laravel",
-        "blade",
-        "template",
-        "view",
-        "render"
-    ],
+    "keywords": ["laravel", "blade", "template", "view", "render"],
     "license": "MIT",
     "authors": [
         {
@@ -24,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Lexdubyna\\Blade\\": "src/"
+            "SirveliaLabs\\Blade\\": "src/"
         }
     },
     "minimum-stability": "dev",
