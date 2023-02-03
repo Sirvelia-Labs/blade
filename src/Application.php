@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexdubyna\Blade;
+namespace SirveliaLabs\Blade;
 
 use Illuminate\Container\Container;
 
