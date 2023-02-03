@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexdubyna\Blade;
+namespace SirveliaLabs\Blade;
 
 use Illuminate\Contracts\Foundation\Application as ApplicationContract;
 use Illuminate\Contracts\View\Factory as FactoryContract;
